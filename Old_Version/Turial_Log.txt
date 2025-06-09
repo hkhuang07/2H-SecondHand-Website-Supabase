@@ -1,0 +1,255 @@
+    XÂY DỰNG DỰ ÁN SỬ DỤNG DỊCH VỤ LƯU TRỮ ĐÁM MÂY
+---------------------------------------------------------
+Tôi muốn xây dự một dự án sử dụng dịch vụ Điện Toán Đám Mây để làm đồ án cho môn Điện Toán Đám Mây.
+- Yêu cầu:
+	+ Sử dụng 1 dịch vụ đám mây
+	+ Sử dụng dịch vụ đám mây có khả năng lưu trữ cơ sở dữ liệu NoSQL chẳng hạn như Firebase, MongoDB...
+	+ Từ đó xây dựng một trang web
+- Hãy đề xuất 1 dịch vụ đám mây phù hợp cho dự án này do tôi đã làm dự án bằng Firebase và MongoDB. Do đó dịch vụ sử dụng trong dự án này tôi nghĩ nên dùng một dịch vụ khác để tăng sự đầu tư, dịch vụ này đơn giản dễ đăng ký, dễ sử dụng, quan trọng là phải miễn phí, có thể deploy trong web lưu trữ nhờ dịch vụ này. 
+- Bên cạnh đó, tôi muốn bạn đề xuất một trang web làm về vấn đề gì? Có thể là bán hàng, trang tin hay nội dung khác, hãy gợi ý thêm.
+	---------------------------------------
+1. Đề xuất dịch vụ đám mây phù hợp
+👉 Supabase
+
+Supabase là một nền tảng backend-as-a-service giống Firebase, nhưng sử dụng PostgreSQL làm database. Tuy nhiên, PostgreSQL có chế độ lưu trữ kiểu JSON (bằng JSONB), nên bạn có thể dùng nó kiểu NoSQL được.
+
+Miễn phí: Gói free khá hào phóng (~500MB database, ~1GB file storage).
+
+Dễ đăng ký: Chỉ cần tài khoản GitHub/Google.
+
+Có hosting: Supabase tích hợp Edge Functions, Storage và Authentication luôn, giống Firebase.
+
+Đơn giản: Dashboard trực quan, dễ quản lý.
+
+Nếu bạn muốn thuần NoSQL hơn thì có thể chọn:
+
+👉 Azure Cosmos DB (gói Free Tier)
+
+Cosmos DB hỗ trợ lưu NoSQL (JSON document store) chuẩn.
+
+Azure đăng ký hơi nhiều bước hơn Supabase, nhưng nếu trường bạn có Microsoft Student Account thì Azure Free rất mạnh.
+
+Tóm lại:
+
+Nếu bạn thích nhanh-gọn, dễ làm, chọn Supabase.
+
+Nếu muốn làm "chuyên nghiệp" hơn và chấp nhận đăng ký lâu hơn chút, chọn Azure Cosmos DB.
+
+2. Đề xuất ý tưởng trang web
+Bây giờ chọn chủ đề web, mình gợi ý vài cái nhé:
+
+Chủ đề	Mô tả	Điểm cộng cho đồ án
+Trang web quản lý sách (Bookstore)	Cho phép upload sách (title, author, thể loại, ảnh bìa), tìm kiếm sách	CRUD đơn giản, quen thuộc, dễ thêm chức năng
+Trang web tin tức trường học	Quản lý bài đăng tin tức nội bộ cho sinh viên (title, content, thời gian)	Giao diện đơn giản, dễ làm phần user authentication
+Website bán đồ second-hand	Người dùng đăng tin bán đồ cũ (tên sản phẩm, giá, ảnh, mô tả)	Vừa CRUD database, vừa xử lý upload file (ảnh)
+Trang quản lý phim yêu thích	Lưu danh sách phim bạn thích (tên phim, thể loại, trailer link)	Giao diện đẹp, dễ dùng API ngoài để lấy dữ liệu phụ trợ
+Website quản lý CV sinh viên	Lưu CV cá nhân, skill, dự án đã làm	Rất sát với thực tế, thầy/cô chấm điểm thích
+3. Gợi ý thêm (nếu muốn nổi bật)
+Dùng thêm Authentication (Supabase hỗ trợ login bằng email/password miễn phí).
+
+Làm thêm upload hình ảnh (Supabase Storage).
+
+Nếu có thời gian: Thêm Realtime (Supabase hỗ trợ luôn).
+
+Tóm tắt đề xuất cho bạn:
+
+Dịch vụ: → Supabase (hoặc Azure Cosmos DB nếu muốn).
+
+Chủ đề web: → Trang web bán đồ second-hand hoặc Trang quản lý sách (cả hai đều vừa CRUD + upload ảnh + login).
+
+
+=========================================================
+SỬ DỤNG DỊCH VỤ Supabase VÀ XÂY DỰNG TRANG WEB BÁN ĐỒ SECOND-HAND.
+- Để bắt đầu cho dự án, hãy hướng dẫn thật chi tiết các bước cần thực hiện cho đồ án.
+	----------------------------------------
+🎯 Tổng Quan Quy Trình
+Chuẩn bị môi trường lập trình
+
+Tạo tài khoản Supabase và setup database
+
+TÊN DỰ ÁN: Second-Hands Website 
+DBPASSWORD: changthequen@Em1lan
+
+Authentication:
+email: huykyunh.k@gmail.com password: HuyKyunH.K07
+email: linsirui07@gmail.com password: HuyKyunH.K07
+
+
+Tạo project web (HTML/CSS/JavaScript hoặc dùng framework như React, Next.js)
+
+Kết nối website với Supabase
+
+Xây dựng chức năng:
+
+Đăng ký/Đăng nhập
+
+Thêm sản phẩm
+
+Hiển thị danh sách sản phẩm
+
+Xem chi tiết sản phẩm
+
+(Nếu muốn) Sửa/Xóa sản phẩm
+
+Deploy website online
+
+Viết báo cáo hoàn chỉnh
+
+🛠️ Chi Tiết Các Bước
+Bước 1: Chuẩn bị môi trường lập trình
+Cài VS Code (hoặc IDE bạn thích)
+
+Cài Node.js (nếu dùng React hoặc Next.js)
+
+Cài Git (để deploy dễ dàng)
+
+Nếu bạn làm web thuần HTML/CSS/JS, chỉ cần VS Code là đủ.
+
+Bước 2: Tạo tài khoản Supabase và thiết lập database
+Truy cập: https://supabase.com/
+
+Đăng ký tài khoản (dùng GitHub/Google cho nhanh).
+
+Tạo Project mới:
+
+Project Name: secondhand-store
+
+Password: (nhớ kỹ)
+
+Region: gần Việt Nam (Singapore)
+
+Sau khi tạo xong, vào Database → Table Editor.
+
+Tạo bảng products:
+
+id (UUID, Primary Key, tự sinh)
+
+title (Text)
+
+description (Text)
+
+price (Numeric)
+
+image_url (Text) - link tới ảnh
+
+created_at (Timestamp, default = now())
+
+Bật Storage:
+
+Storage → Create bucket → tên product-images → loại Public.
+
+Dùng để lưu ảnh sản phẩm.
+
+(Nếu làm login) Vào Authentication → Enable Email/Password Login.
+
+Bước 3: Tạo Project Web
+Bạn có 2 hướng:
+
+HTML/CSS/JS thuần (dễ làm, nhẹ nhàng)
+
+React.js (đẹp hơn, hiện đại, nếu bạn biết cơ bản)
+
+👉 Ví dụ tạo web thuần:
+
+bash
+Copy code
+mkdir secondhand-store
+cd secondhand-store
+code .
+Tạo các file: index.html, style.css, app.js.
+
+Bước 4: Kết nối Website với Supabase
+Cài thư viện Supabase client:
+
+html
+Copy code
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+Khởi tạo kết nối trong app.js:
+
+javascript
+Copy code
+const SUPABASE_URL = 'https://xxxx.supabase.co';  // Lấy trong Project Settings
+const SUPABASE_ANON_KEY = 'your-anon-key-here';    // Lấy trong Project Settings
+
+const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+Bước 5: Xây dựng chức năng chính
+5.1. Đăng ký/Đăng nhập người dùng
+javascript
+Copy code
+async function signUp(email, password) {
+  const { user, error } = await supabase.auth.signUp({
+    email,
+    password,
+  });
+  if (error) console.error(error);
+  else console.log('Signed up', user);
+}
+5.2. Upload ảnh sản phẩm
+javascript
+Copy code
+async function uploadImage(file) {
+  const { data, error } = await supabase.storage
+    .from('product-images')
+    .upload(`public/${file.name}`, file);
+  if (error) console.error(error);
+  else return `${SUPABASE_URL}/storage/v1/object/public/product-images/public/${file.name}`;
+}
+5.3. Thêm sản phẩm mới
+javascript
+Copy code
+async function addProduct(title, description, price, imageUrl) {
+  const { data, error } = await supabase
+    .from('products')
+    .insert([
+      { title, description, price, image_url: imageUrl }
+    ]);
+  if (error) console.error(error);
+  else console.log('Product added:', data);
+}
+5.4. Hiển thị danh sách sản phẩm
+javascript
+Copy code
+async function fetchProducts() {
+  const { data, error } = await supabase
+    .from('products')
+    .select('*')
+    .order('created_at', { ascending: false });
+  
+  if (error) console.error(error);
+  else renderProducts(data);
+}
+Rồi bạn dùng renderProducts(data) để đẩy dữ liệu vào HTML.
+
+5.5. Xem chi tiết sản phẩm (tuỳ chọn)
+Bạn có thể thêm trang product.html?id=... rồi fetch theo id.
+
+Bước 6: Deploy Website Online
+Để hoàn thiện đồ án, cần deploy:
+
+Netlify (miễn phí, dễ xài):
+
+Push code lên GitHub
+
+Vào Netlify, Connect GitHub repo → Deploy.
+
+Hoặc:
+
+Vercel (rất nhanh nếu dùng Next.js).
+
+Bước 7: Viết báo cáo đồ án
+Trong báo cáo, nhớ trình bày:
+
+Giới thiệu dự án
+
+Tại sao chọn Supabase
+
+Kiến trúc hệ thống (sơ đồ Database + Web)
+
+Các chức năng đã thực hiện
+
+Demo và đường link website
+
+Nhận xét cá nhân và hướng phát triển
+
+
+=========================================================

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="icon" href="favicon.ico">
+    <!-- CSS style -->
+   <link rel="stylesheet" type="text/css"  href="./css/style.css" />
+    <title>Processing Add Product-Categories - Second-hands Store Website </title>
+</head>
+
+<body>
+  <div class="container-fluid">
+        <div id="Header">
+        </div>
+        <div id="navbar"></div>
+        <div class="card mt-3">
+            <div class="card-body text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Processing...</span>
+                </div>
+                <p class="mt-3">Processing, please wait...</p>
+            </div>
+        </div>
+        <div id="footer"></div>
+    </div>
+
+    <script type="module" src="inc/config.js"></script>
+
+    <script type="module">
+        import { supabase } from './inc/config.js';
+
+        $(function () {
+            $('#navbar').load('inc/navbar.html');
+            $('#footer').load('inc/footer.html');
+        });
+
+        async function insertProductCategory() {
+            const productID = localStorage.getItem('productID');
+            const categoryID = localStorage.getItem('categoryID');
+
+            const { data, error } = await supabase
+                .from('product_categories')
+                .insert([
+                    { product_id: productID, category_id: categoryID }
+                ]);
+
+            if (error) {
+                document.querySelector('.card-body').innerHTML = `
+          <div class="alert alert-danger">
+            <i class="bi bi-x-circle"></i> Error adding relation: ${error.message}
+          </div>
+        `;
+            } else {
+                document.querySelector('.card-body').innerHTML = `
+          <div class="alert alert-success">
+            <i class="bi bi-check-circle"></i> Product-category relation added successfully. Redirecting...
+          </div>
+        `;
+                setTimeout(() => {
+                    window.location.href = 'product-categories.html';
+                }, 2000); // Đợi 2 giây trước khi chuyển trang
+            }
+        }
+
+        insertProductCategory();
+    </script>
+</body>
+
+</html>

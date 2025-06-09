@@ -1,0 +1,114 @@
+--TẠO BẢNG 
+-- 0. Kích hoạt extension UUID (chạy 1 lần)
+create extension if not exists "uuid-ossp";
+
+-- 1. Tạo bảng sản phẩm
+create table products (
+  id uuid primary key default uuid_generate_v4(),
+  title text not null,
+  description text,
+  price numeric not null,
+  image_url text,
+  created_at timestamp default now()
+);
+
+-- 2. Tạo bảng danh mục
+create table categories (
+  id serial primary key,
+  name text not null,
+  created_at timestamp default now()
+);
+
+-- 3. Bảng phụ: sản phẩm - danh mục (nhiều-nhiều)
+create table product_categories (
+  product_id uuid not null,
+  category_id integer not null,
+  primary key (product_id, category_id),
+  foreign key (product_id) references products(id) on delete cascade,
+  foreign key (category_id) references categories(id) on delete cascade
+);
+
+-- 4. Tạo bảng đơn hàng
+create table orders (
+  id uuid primary key default uuid_generate_v4(),
+  buyer_name text not null,
+  buyer_phone text not null,
+  total_price numeric,
+  status text default 'pending',
+  created_at timestamp default now()
+);
+
+CREATE TYPE order_status AS ENUM ('pending', 'confirmed', 'shipped', 'cancelled');
+
+ALTER TABLE orders
+ALTER COLUMN status TYPE order_status
+USING status::order_status;
+
+
+-- 5. Tạo bảng chi tiết đơn hàng
+create table order_items (
+  id serial primary key,
+  order_id uuid not null,
+  product_id uuid not null,
+  quantity integer not null,
+  price numeric not null,
+  foreign key (order_id) references orders(id) on delete cascade,
+  foreign key (product_id) references products(id) on delete restrict
+);
+
+
+--THÊM DỮ LIỆU MẪU
+-- 1. Thêm danh mục sản phẩm
+insert into categories (name) values
+('Quần áo'),
+('Giày dép'),
+('Túi xách'),
+('Phụ kiện thời trang'),
+('Đồ điện tử');
+
+-- 2. Thêm sản phẩm
+insert into products (title, description, price, image_url) values
+('Áo khoác jean Unisex', 'Áo khoác jean secondhand, form rộng, phong cách vintage.', 150000, 'https://example.com/aokhoacjean.jpg'),
+('Giày Nike Air Max', 'Giày thể thao Nike Air Max chính hãng đã qua sử dụng, size 42.', 850000, 'https://example.com/giaynike.jpg'),
+('Túi xách LV Vintage', 'Túi xách Louis Vuitton vintage, còn mới 80%.', 2500000, 'https://example.com/tuixachlv.jpg'),
+('Đồng hồ Casio cổ điển', 'Đồng hồ Casio cổ, pin mới thay, còn hoạt động tốt.', 500000, 'https://example.com/donghocasio.jpg'),
+('Laptop Dell cũ', 'Laptop Dell Inspiron i5, RAM 8GB, HDD 500GB, còn dùng tốt.', 3500000, 'https://example.com/laptopdell.jpg');
+
+-- 3. Gán sản phẩm vào danh mục
+insert into product_categories (product_id, category_id)
+select p.id, c.id
+from products p, categories c
+where (p.title = 'Áo khoác jean Unisex' and c.name = 'Quần áo')
+   or (p.title = 'Giày Nike Air Max' and c.name = 'Giày dép')
+   or (p.title = 'Túi xách LV Vintage' and c.name = 'Túi xách')
+   or (p.title = 'Đồng hồ Casio cổ điển' and c.name = 'Phụ kiện thời trang')
+   or (p.title = 'Laptop Dell cũ' and c.name = 'Đồ điện tử');
+*/
+-- 4. Thêm đơn hàng
+insert into orders (buyer_name, buyer_phone, total_price, status) values
+('Quách Tuệ Mẫn', '0901234567', 1000000, 'pending'),
+('Lý Minh Hào', '0932123456', 850000, 'confirmed'),
+('Hoàng Chiêu Ái Sa', '0969876543', 2500000, 'shipped'),
+('Kim Thành Vũ', '0923456789', 150000, 'pending'),
+('Tần Tuấn Kiệt', '0911122233', 4000000, 'confirmed');
+
+-- 5. Thêm sản phẩm vào đơn hàng
+insert into order_items (order_id, product_id, quantity, price)
+select o.id, p.id, 1, p.price
+from orders o, products p
+
+where (o.buyer_name = 'Quách Tuệ Mẫn' and p.title = 'Đồng hồ Casio cổ điển')
+   or (o.buyer_name = 'Lý Minh Hào' and p.title = 'Giày Nike Air Max')
+   or (o.buyer_name = 'Hoàng Chiêu Ái Sa' and p.title = 'Túi xách LV Vintage')
+   or (o.buyer_name = 'Kim Thành Vũ' and p.title = 'Áo khoác jean Unisex')
+   or (o.buyer_name = 'Tần Tuấn Kiệt' and p.title = 'Laptop Dell cũ');
+
+
+--Tạo function để nhận lệnh ping
+--Do supabase sẽ tự động cho database ngủ dông sau 7 ngày và xóa database sau 90 ngày nên lệnh ping này sẽ tư động ping vào trang web để duy trì database
+create or replace function ping()
+returns void
+language sql
+as $$
+  select;
+$$;
